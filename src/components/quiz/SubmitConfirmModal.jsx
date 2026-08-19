@@ -43,7 +43,7 @@ export default function SubmitConfirmModal({
 
         {unansweredCount > 0 && (
           <p className="text-xs text-amber-400 bg-amber-500/10 border border-amber-500/20 p-2.5 rounded-xl mb-4 text-left">
-            ⚠️ You still have <strong>{unansweredCount} unanswered questions</strong>. You can go back and complete them before submitting.
+             You still have <strong>{unansweredCount} unanswered questions</strong>. You can go back and complete them before submitting.
           </p>
         )}
 

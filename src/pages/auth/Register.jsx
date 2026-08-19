@@ -8,6 +8,8 @@ export default function Register() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [role, setRole] = useState('student');
+  const [adminRegistrationKey, setAdminRegistrationKey] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -20,9 +22,9 @@ export default function Register() {
     setLoading(true);
 
     try {
-      const res = await register(name, email, password);
+      const res = await register(name, email, password, role, adminRegistrationKey);
       if (res.success) {
-        navigate('/student/dashboard');
+        navigate(res.data.user.role === 'admin' ? '/admin/dashboard' : '/student/dashboard');
       }
     } catch (err) {
       setError(err.message || 'Registration failed.');
@@ -47,8 +49,8 @@ export default function Register() {
               <FiCheckCircle className="w-6 h-6 text-blue-400" />
             </div>
           </div>
-          <h2 className="text-2xl font-black text-white tracking-tight">Student Registration</h2>
-          <p className="text-xs text-slate-400 mt-1">Create your student account to take quizzes</p>
+          <h2 className="text-2xl font-black text-white tracking-tight">Create Account</h2>
+          <p className="text-xs text-slate-400 mt-1">Choose your account type to get started</p>
         </div>
 
         {error && (
@@ -59,6 +61,22 @@ export default function Register() {
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block text-xs font-semibold text-slate-300 mb-1.5">Account Type</label>
+            <div className="grid grid-cols-2 gap-2 p-1 bg-slate-950 border border-slate-800 rounded-xl">
+              {['student', 'admin'].map((accountRole) => (
+                <button
+                  key={accountRole}
+                  type="button"
+                  onClick={() => setRole(accountRole)}
+                  className={`py-2 rounded-lg text-xs font-bold capitalize transition ${role === accountRole ? 'bg-blue-600 text-white' : 'text-slate-400 hover:text-white'}`}
+                >
+                  {accountRole}
+                </button>
+              ))}
+            </div>
+          </div>
+
           <div>
             <label className="block text-xs font-semibold text-slate-300 mb-1.5">Full Name</label>
             <div className="relative">
@@ -73,6 +91,24 @@ export default function Register() {
               />
             </div>
           </div>
+
+          {role === 'admin' && (
+            <div>
+              <label className="block text-xs font-semibold text-slate-300 mb-1.5">Admin Registration Key</label>
+              <div className="relative">
+                <FiLock className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4" />
+                <input
+                  type="password"
+                  required
+                  value={adminRegistrationKey}
+                  onChange={(e) => setAdminRegistrationKey(e.target.value)}
+                  placeholder="Enter the key shared by an admin"
+                  className="w-full pl-10 pr-4 py-2.5 bg-slate-950 border border-slate-800 focus:border-blue-500 rounded-xl text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-blue-500 transition"
+                />
+              </div>
+              <p className="mt-1.5 text-[11px] text-slate-500">This key protects administrator access.</p>
+            </div>
+          )}
 
           <div>
             <label className="block text-xs font-semibold text-slate-300 mb-1.5">Email Address</label>

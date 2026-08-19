@@ -34,17 +34,6 @@ export default function Login() {
     }
   };
 
-  // Preset credentials helper for testing ease
-  const fillCredentials = (role) => {
-    if (role === 'admin') {
-      setEmail('admin@quizplatform.com');
-      setPassword('Admin@123');
-    } else {
-      setEmail('student1@test.com');
-      setPassword('Student@123');
-    }
-  };
-
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-950 p-4 relative overflow-hidden">
       {/* Background Orbs */}
@@ -64,24 +53,6 @@ export default function Login() {
           </div>
           <h2 className="text-2xl font-black text-white tracking-tight">Welcome Back</h2>
           <p className="text-xs text-slate-400 mt-1">Sign in to your QuizMaster account</p>
-        </div>
-
-        {/* Test Preset Buttons */}
-        <div className="flex gap-2 mb-6 p-1.5 bg-slate-950/80 rounded-xl border border-slate-800">
-          <button
-            type="button"
-            onClick={() => fillCredentials('student')}
-            className="flex-1 py-1.5 text-[11px] font-semibold text-slate-300 hover:text-white hover:bg-slate-800/80 rounded-lg transition"
-          >
-            🔑 Fill Student Demo
-          </button>
-          <button
-            type="button"
-            onClick={() => fillCredentials('admin')}
-            className="flex-1 py-1.5 text-[11px] font-semibold text-amber-400 hover:bg-slate-800/80 rounded-lg transition"
-          >
-            🛡️ Fill Admin Demo
-          </button>
         </div>
 
         {error && (
